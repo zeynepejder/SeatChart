@@ -62,6 +62,9 @@ public class SeatChart{
 			while(!(seats.get(s).getStudent().equals("notAssigned"))){
 				s = randomSeats.nextInt(numOfSeats);
 			}
+			if(i == students.size()){
+				break;
+			}
 			seats.get(s).setStudent(students.get(i));
 		}
 
