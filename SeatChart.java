@@ -14,6 +14,7 @@ public class SeatChart{
 	ArrayList<String> students = new ArrayList<String>();
 	Random randomSeats = new Random();
 	int numOfSeats;
+	int numOfStudents;
 
 	System.out.println("File name: " + args[0]);
 
@@ -53,14 +54,19 @@ public class SeatChart{
 
 		Collections.sort(seats);
 		numOfSeats = seats.size();
+		numOfStudents = students.size();
+
 		if(numOfSeats < students.size()){
 			System.out.println("There are more students than this room can accommodate. The program will only assign seats to the first " +numOfSeats+" students.");
 		}
+		int i;
 
-		for(int i = 0; i < seats.size(); i++){
-			int s = randomSeats.nextInt(numOfSeats);
+		
+		// Every other seat first
+		for(i = 0; i < seats.size()/2; i++){
+			int s = randomSeats.nextInt((numOfSeats+1)/2) * 2;
 			while(!(seats.get(s).getStudent().equals("notAssigned"))){
-				s = randomSeats.nextInt(numOfSeats);
+				s = randomSeats.nextInt((numOfSeats+1)/2) * 2;
 			}
 			if(i == students.size()){
 				break;
@@ -68,7 +74,37 @@ public class SeatChart{
 			seats.get(s).setStudent(students.get(i));
 		}
 
-		for(int i = 0; i < seats.size(); i++){
+		for(; i < students.size(); i++){
+			int s = randomSeats.nextInt((numOfSeats)/2) * 2 +1;
+			if(i == seats.size()){
+				break;
+			}
+			while(!(seats.get(s).getStudent().equals("notAssigned"))){
+				s = randomSeats.nextInt((numOfSeats)/2) * 2 +1;
+			}
+
+			seats.get(s).setStudent(students.get(i));
+		}
+
+/*
+		//Random
+		for(i = 0 ;i < seats.size(); i++){
+			int s = randomSeats.nextInt(numOfSeats);
+
+			while(!(seats.get(s).getStudent().equals("notAssigned"))){
+				s = randomSeats.nextInt(numOfSeats);
+			}
+
+			if(i == students.size()){
+				break;
+			}
+
+			seats.get(s).setStudent(students.get(i));
+
+		}
+*/
+
+		for(i = 0; i < seats.size(); i++){
 
 			writer.println(seats.get(i));
 
